@@ -6,7 +6,6 @@
 		<groupId>org.springframework.security.oauth</groupId>
 		<artifactId>spring-security-oauth-parent</artifactId>
 		<version>2.3.1.BUILD-SNAPSHOT</version>
-		<relativePath>../../..</relativePath>
 	</parent>
 
 	<artifactId>sparklr2</artifactId>

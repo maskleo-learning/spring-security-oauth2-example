@@ -7,55 +7,56 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 这是用于支持 `OAuth 2.0` 的用户指南。 对于 `OAuth 1.0`，一切都不一样，请参阅其[用户指南]
 (https://projects.spring.io/spring-security-oauth/docs/oauth1.html)。
 
-本用户指南分为两部分，第一部分为 `OAuth 2.0` 提供者，第二部分为 `OAuth 2.0` 客户端。 对于提供者和客户端来说，示例代码的最佳来源是[集成测试]
-(https://github.com/spring-projects/spring-security-oauth/tree/master/tests)和[示例应用程序]
+本用户指南分为两部分，第一部分为 `OAuth 2.0` 提供者，第二部分为 `OAuth 2.0` 客户端。 对于提供者和客户端来说，示例代码的最佳来源是[集成
+测试](https://github.com/spring-projects/spring-security-oauth/tree/master/tests)和[示例应用程序]
 (https://github.com/spring-projects/spring-security-oauth/tree/master/samples/oauth2)。
 
 ## `OAuth 2.0` 提供程序
 
-`OAuth 2.0` 提供者机制负责公开受 `OAuth 2.0`保护的资源。 该配置涉及建立可独立或代表用户访问其受保护资源的 `OAuth 2.0` 客户端。 提供者通过管理和验
-证用于访问受保护资源的 `OAuth 2.0` 令牌来实现此目的。 在适用的情况下，提供者还必须为用户提供接口以确认客户可以被授权访问受保护的资源（即确认页面）。
+`OAuth 2.0` 提供者机制负责公开受 `OAuth 2.0` 保护的资源。该配置涉及建立可独立或代表用户访问其受保护资源的 `OAuth 2.0` 客户端。 提供者
+通过管理和验证用于访问受保护资源的 `OAuth 2.0` 令牌来实现此目的。 在适用的情况下，提供者还必须为用户提供接口以确认客户可以被授权访问受保护
+的资源（即确认页面）。
 
 ## `OAuth 2.0` 提供程序实现
 
-`OAuth 2.0` 中的提供者角色实际上分为授权服务和资源服务，虽然这些角色有时驻留在同一个应用程序中，但通过使用 `Spring Security OAuth`，您可以选择将它
-们拆分为两个应用程序，还可以让多个共享的资源服务授权服务。对令牌的请求由 `Spring MVC` 控制器端点处理，对受保护资源的访问由标准的 `Spring Security` 
-请求过滤器处理。为了实现 `OAuth 2.0` 授权服务器，`Spring Security` 过滤器链中需要以下端点：
+`OAuth 2.0` 中的提供者角色实际上分为授权服务和资源服务，虽然这些角色有时驻留在同一个应用程序中，但通过使用 `Spring Security OAuth`，您
+可以选择将它们拆分为两个应用程序，还可以让多个共享的资源服务授权服务。对令牌的请求由 `Spring MVC` 控制器端点处理，对受保护资源的访问由标准
+的 `Spring Security` 请求过滤器处理。为了实现 `OAuth 2.0` 授权服务器，`Spring Security` 过滤器链中需要以下端点：
 
-- `AuthorizationEndpoint` 用于为授权请求提供服务。 默认URL： `/oauth/authorize`。
-- `TokenEndpoint` 用于为访问令牌提供服务请求。 默认网址：`/oauth/token`。
+- `AuthorizationEndpoint` 用于为授权请求提供服务。默认URL： `/oauth/authorize`。
+- `TokenEndpoint` 用于为访问令牌提供服务请求。默认网址：`/oauth/token`。
 
-以下过滤器是实现OAuth 2.0资源服务器所必需的：
+以下过滤器是实现 `OAuth 2.0` 资源服务器所必需的：
 
 `OAuth2AuthenticationProcessingFilter` 用于为给定经过身份验证的访问令牌的请求加载身份验证。
 
-- 对于所有 `OAuth 2.0` 提供者功能，使用特殊的 `Spring OAuth` `@Configuration` 适配器简化了配置。 还有一个用于 `OAuth` 配置的 `XML` 名称空间，该
-架构驻留在 [`http://www.springframework.org/schema/security/spring-security-oauth2.xsd`]
-(http://www.springframework.org/schema/security/spring-security-oauth2.xsd)。 命名空间是 
+- 对于所有 `OAuth 2.0` 提供者功能，使用特殊的 `Spring OAuth` `@Configuration` 适配器简化了配置。 还有一个用于 `OAuth` 配置的 `XML`
+名称空间，该架构驻留在 [`http://www.springframework.org/schema/security/spring-security-oauth2.xsd`]
+(http://www.springframework.org/schema/security/spring-security-oauth2.xsd)。命名空间是 
 [`http://www.springframework.org/schema/security/oauth2`](http://www.springframework.org/schema/security/oauth2)。
 
 ## 授权服务器配置
 
-在配置授权服务器时，您必须考虑客户端用于从最终用户获取访问令牌的授权类型（例如授权代码，用户凭据，刷新令牌）。服务器的配置用于提供客户端详细信息服
-和令牌服务的实现，并在全局范围内启用或禁用该机制的某些方面。但是请注意，每个客户端都可以使用特定的权限来配置，以便能够使用某些授权机制和访问权限。即
-仅仅因为您的提供程序配置为支持“客户端凭据”授予类型，并不意味着特定客户端有权使用该授予类型。
+在配置授权服务器时，您必须考虑客户端用于从最终用户获取访问令牌的授权类型（例如授权代码，用户凭据，刷新令牌）。服务器的配置用于提供客户端详细
+信息服和令牌服务的实现，并在全局范围内启用或禁用该机制的某些方面。但是请注意，每个客户端都可以使用特定的权限来配置，以便能够使用某些授权机制
+和访问权限。即仅仅因为您的提供程序配置为支持“客户端凭据”授予类型，并不意味着特定客户端有权使用该授予类型。
 
-`@EnableAuthorizationServer` 注释用于配置 `OAuth 2.0` 授权服务器机制，以及实现 `AuthorizationServerConfigurer` 的任何 `@Beans`（有一个方便的
-适配器实现和空方法）。将以下功能委托给独立的由 `Spring` 创建并传递到 `AuthorizationServerConfigurer` 的配置器：
+`@EnableAuthorizationServer` 注释用于配置 `OAuth 2.0` 授权服务器机制，以及实现 `AuthorizationServerConfigurer` 的任何 `@Beans`
+（有一个方便的适配器实现和空方法）。将以下功能委托给独立的由 `Spring` 创建并传递到 `AuthorizationServerConfigurer` 的配置器：
 
 - `ClientDetailsS​​erviceConfigurer`：定义客户端详细信息服务的配置器。客户详细信息可以初始化，或者您可以参考现有的商店。
 - `AuthorizationServerSecurityConfigurer`：定义令牌端点上的安全约束。
 - `AuthorizationServerEndpointsConfigurer`：定义授权和令牌端点以及令牌服务。
 
-提供程序配置的一个重要方面是将授权代码提供给 `OAuth` 客户端（在授权代码授权中）的方式。`OAuth` 客户端通过将最终用户引导至授权页面来获得授权代码，其
-中用户可以输入其凭证，导致从提供者授权服务器重定向到具有授权代码的 `OAuth` 客户端。这个例子在 `OAuth 2` 规范中详细说明。
+提供程序配置的一个重要方面是将授权代码提供给 `OAuth` 客户端（在授权代码授权中）的方式。`OAuth` 客户端通过将最终用户引导至授权页面来获得授
+权代码，其中用户可以输入其凭证，导致从提供者授权服务器重定向到具有授权代码的 `OAuth` 客户端。这个例子在 `OAuth 2` 规范中详细说明。
 
 在 `XML` 中，有一个 `<authorization-server />` 元素以类似的方式用于配置 `OAuth 2.0` 授权服务器。
 
 ### 配置客户端细节
 
-`ClientDetailsS​​erviceConfigurer`（来自 `AuthorizationServerConfigurer` 的回调）可用于定义客户端详细信息服务的内存中或 `JDBC` 实现。客户的重
-要属性是
+`ClientDetailsS​​erviceConfigurer`（来自 `AuthorizationServerConfigurer` 的回调）可用于定义客户端详细信息服务的内存中或 `JDBC` 实
+现。客户的重要属性是
 
 - `clientId`：（必填）客户端 `ID`。
 - `secret`:(对可信的客户端要求）客户端秘密（如果有的话）。
@@ -63,8 +64,8 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 - `authorizedGrantTypes`：授权客户使用的授予类型。默认值为空。
 - `authorities`：授予客户的机构（普通的 `Spring Security` 机构）。
 
-通过直接访问底层存储（例如 `JdbcClientDetailsS​​ervice` 的情况下的数据库表）或通过 `ClientDetailsManager` 接口（`ClientDetailsService` 的两
-个实现同时实现），可以在正在运行的应用程序中更新客户端详细信息。
+通过直接访问底层存储（例如 `JdbcClientDetailsS​​ervice` 的情况下的数据库表）或通过 `ClientDetailsManager` 接口（
+`ClientDetailsService` 的两个实现同时实现），可以在正在运行的应用程序中更新客户端详细信息。
 
  > 注意：`JDBC` 服务的模式没有与库一起打包（因为实际中可能会使用太多的变体），但是您可以从 `github` 中的测试代码开始。
 
