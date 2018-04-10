@@ -44,7 +44,7 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 `@EnableAuthorizationServer` 注释用于配置 `OAuth 2.0` 授权服务器机制，以及实现 `AuthorizationServerConfigurer` 的任何 `@Beans`
 （有一个方便的适配器实现和空方法）。将以下功能委托给独立的由 `Spring` 创建并传递到 `AuthorizationServerConfigurer` 的配置器：
 
-- `ClientDetailsS​​erviceConfigurer`：定义客户端详细信息服务的配置器。客户详细信息可以初始化，或者您可以参考现有的商店。
+- `ClientDetailsServiceConfigurer`：定义客户端详细信息服务的配置器。客户详细信息可以初始化，或者您可以参考现有的商店。
 - `AuthorizationServerSecurityConfigurer`：定义令牌端点上的安全约束。
 - `AuthorizationServerEndpointsConfigurer`：定义授权和令牌端点以及令牌服务。
 
@@ -55,7 +55,7 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 
 ### 配置客户端细节
 
-`ClientDetailsS​​erviceConfigurer`（来自 `AuthorizationServerConfigurer` 的回调）可用于定义客户端详细信息服务的内存中或 `JDBC` 实
+`ClientDetailsServiceConfigurer`（来自 `AuthorizationServerConfigurer` 的回调）可用于定义客户端详细信息服务的内存中或 `JDBC` 实
 现。客户的重要属性是
 
 - `clientId`：（必填）客户端 `ID`。
@@ -64,7 +64,7 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 - `authorizedGrantTypes`：授权客户使用的授予类型。默认值为空。
 - `authorities`：授予客户的机构（普通的 `Spring Security` 机构）。
 
-通过直接访问底层存储（例如 `JdbcClientDetailsS​​ervice` 的情况下的数据库表）或通过 `ClientDetailsManager` 接口（
+通过直接访问底层存储（例如 `JdbcClientDetailsService` 的情况下的数据库表）或通过 `ClientDetailsManager` 接口（
 `ClientDetailsService` 的两个实现同时实现），可以在正在运行的应用程序中更新客户端详细信息。
 
  > 注意：`JDBC` 服务的模式没有与库一起打包（因为实际中可能会使用太多的变体），但是您可以从 `github` 中的测试代码开始。
@@ -111,7 +111,7 @@ link :https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 （请参阅下面有关如何打开它的详细信息）。以下属性影响授权类型：
 
 - `authenticationManager`：通过注入 `AuthenticationManager` 来开启密码授权。
-- `userDetailsS​​ervice`：如果您注入了 `UserDetailsS​​ervice` 或者全局配置了全局配置（例如在 `GlobalAuthenticationManagerConfigurer` 中），那
+- `userDetailsService`：如果您注入了 `UserDetailsService` 或者全局配置了全局配置（例如在 `GlobalAuthenticationManagerConfigurer` 中），那
 么刷新令牌授权将包含对用户详细信息的检查，以确保该帐户仍处于活动状态
 - `authorizationCodeServices`：为授权代码授权定义授权代码服务（`AuthorizationCodeServices`的实例）。
 - `implicitGrantService`：在 `imlpicit` 授权期间管理状态。
