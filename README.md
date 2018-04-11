@@ -13,3 +13,6 @@ example for spring-security-oauth2
 - https://projects.spring.io/spring-security-oauth/docs/oauth2.html
 
 - https://spring.io/guides/tutorials/spring-boot-oauth2/
+
+
+- http://andaily.com/spring-oauth-server/db_table_description.html
