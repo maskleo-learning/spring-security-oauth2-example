@@ -13,8 +13,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>oauth/sparklr</module>
-    <module>oauth/tonr</module>
     <module>oauth2/sparklr</module>
     <module>oauth2/tonr</module>
   </modules>
