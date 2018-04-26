@@ -18,3 +18,5 @@ example for spring-security-oauth2
 - http://andaily.com/spring-oauth-server/db_table_description.html
 
 - https://blog.csdn.net/u013815546/article/category/7090661
+
+- https://www.cnblogs.com/hoojjack/p/8485478.html
